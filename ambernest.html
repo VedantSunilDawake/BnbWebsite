@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AmberNest — A Heritage Stay by AmberStays</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,500;0,600;1,400&family=Be+Vietnam+Pro:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --surface: #fbf9f5;
+    --surface-low: #f5f3ef;
+    --surface-container: #efeeea;
+    --surface-high: #eae8e4;
+    --surface-highest: #e4e2de;
+    --on-surface: #1b1c1a;
+    --on-surface-variant: #504536;
+    --outline: #827564;
+    --outline-variant: #d4c4b1;
+    --primary: #7d5400;
+    --primary-container: #9d6a04;
+    --primary-dim: #fabb58;
+    --primary-fixed: #ffddb0;
+    --on-primary: #ffffff;
+    --secondary: #705a49;
+    --secondary-container: #f8dac5;
+    --inverse-surface: #30312e;
+    --inverse-on-surface: #f2f0ed;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--surface);
+    color: var(--on-surface);
+    font-family: 'Be Vietnam Pro', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ─── LINEN TEXTURE ─── */
+  .linen {
+    position: relative;
+  }
+  .linen::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4'%3E%3Ccircle cx='1' cy='1' r='0.6' fill='%23d4c4b1' opacity='0.4'/%3E%3C/svg%3E");
+    background-size: 4px 4px;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.35;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(253, 252, 251, 0.96);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--outline-variant);
+    box-shadow: 0 4px 40px rgba(44,38,34,0.04);
+  }
+  .nav-inner {
+    max-width: 1280px; margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 64px; height: 80px;
+  }
+  .nav-logo {
+    font-family: 'Noto Serif', serif;
+    font-style: italic;
+    font-size: 22px;
+    color: var(--primary-container);
+    text-decoration: none;
+    letter-spacing: 0.01em;
+  }
+  .nav-logo span { font-size: 11px; font-style: normal; font-family: 'Be Vietnam Pro', sans-serif; display: block; color: var(--outline); letter-spacing: 0.12em; text-transform: uppercase; margin-top: -2px; }
+  .nav-links { display: flex; gap: 40px; align-items: center; }
+  .nav-links a {
+    font-size: 13px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--on-surface-variant); text-decoration: none;
+    transition: color 0.3s; position: relative;
+  }
+  .nav-links a:hover { color: var(--primary); }
+  .nav-links a.active { color: var(--primary); }
+  .nav-links a.active::after {
+    content: ''; position: absolute; bottom: -4px; left: 0; right: 0;
+    height: 1px; background: var(--primary);
+  }
+  .btn-primary {
+    font-family: 'Be Vietnam Pro', sans-serif;
+    font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+    background: var(--primary); color: white;
+    padding: 12px 28px; border: none; cursor: pointer;
+    border-radius: 2px;
+    transition: background 0.3s, transform 0.15s;
+  }
+  .btn-primary:hover { background: var(--primary-container); }
+  .btn-primary:active { transform: scale(0.97); }
+  .btn-ghost {
+    font-family: 'Be Vietnam Pro', sans-serif;
+    font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+    background: transparent; color: white;
+    padding: 12px 28px; border: 1px solid rgba(255,255,255,0.7); cursor: pointer;
+    border-radius: 2px;
+    transition: all 0.3s;
+  }
+  .btn-ghost:hover { background: rgba(255,255,255,0.12); }
+
+  /* ─── HERO ─── */
+  .hero {
+    position: relative; height: 92vh; min-height: 640px;
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background-image: url('https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=2070&auto=format&fit=crop');
+    background-size: cover; background-position: center 40%;
+    transform: scale(1.04);
+    transition: transform 8s ease-out;
+  }
+  .hero-bg.loaded { transform: scale(1); }
+  .hero-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to bottom, rgba(15,10,5,0.15) 0%, rgba(15,10,5,0.55) 100%);
+  }
+  .hero-content {
+    position: relative; z-index: 2;
+    text-align: center; color: white; padding: 0 24px;
+    max-width: 780px;
+  }
+  .hero-eyebrow {
+    font-size: 11px; font-weight: 600; letter-spacing: 0.35em; text-transform: uppercase;
+    color: var(--primary-dim); margin-bottom: 24px;
+    display: flex; align-items: center; justify-content: center; gap: 16px;
+  }
+  .hero-eyebrow::before, .hero-eyebrow::after {
+    content: ''; flex: 1; max-width: 60px; height: 1px; background: var(--primary-dim); opacity: 0.7;
+  }
+  .hero h1 {
+    font-family: 'Noto Serif', serif;
+    font-size: clamp(44px, 6vw, 72px);
+    font-weight: 600; line-height: 1.1; letter-spacing: -0.02em;
+    margin-bottom: 20px;
+    text-shadow: 0 4px 24px rgba(0,0,0,0.2);
+  }
+  .hero p {
+    font-size: 17px; line-height: 1.7; color: rgba(255,255,255,0.85);
+    max-width: 520px; margin: 0 auto 36px;
+  }
+  .hero-actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+
+  /* Scroll indicator */
+  .scroll-hint {
+    position: absolute; bottom: 36px; left: 50%; transform: translateX(-50%);
+    z-index: 2; display: flex; flex-direction: column; align-items: center; gap: 8px;
+    color: rgba(255,255,255,0.5); font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+  }
+  .scroll-hint-line {
+    width: 1px; height: 48px; background: rgba(255,255,255,0.3);
+    animation: scrollPulse 2s ease-in-out infinite;
+  }
+  @keyframes scrollPulse {
+    0%, 100% { transform: scaleY(1); opacity: 0.4; }
+    50% { transform: scaleY(0.5); opacity: 0.8; }
+  }
+
+  /* ─── PHILOSOPHY SECTION ─── */
+  .philosophy {
+    display: grid; grid-template-columns: 1fr 1fr;
+    min-height: 620px; overflow: hidden;
+  }
+  .philosophy-text {
+    background: var(--primary-container);
+    color: white;
+    padding: 80px 80px;
+    display: flex; flex-direction: column; justify-content: center;
+    position: relative; overflow: hidden;
+  }
+  .philosophy-text::before {
+    content: '"'; position: absolute; top: -20px; left: 40px;
+    font-family: 'Noto Serif', serif; font-size: 320px; color: rgba(255,255,255,0.05);
+    line-height: 1;
+  }
+  .philosophy-eyebrow {
+    font-size: 10px; font-weight: 600; letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--primary-dim); margin-bottom: 24px;
+  }
+  .philosophy-text h2 {
+    font-family: 'Noto Serif', serif; font-size: 36px; font-weight: 500;
+    line-height: 1.25; margin-bottom: 24px; color: white;
+  }
+  .philosophy-text p { font-size: 15px; line-height: 1.75; color: rgba(255,255,255,0.78); margin-bottom: 32px; }
+  .text-link {
+    font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--primary-dim); text-decoration: none;
+    display: inline-flex; align-items: center; gap: 8px;
+    transition: gap 0.3s;
+  }
+  .text-link:hover { gap: 14px; }
+  .philosophy-image {
+    position: relative; overflow: hidden;
+  }
+  .philosophy-image img {
+    width: 100%; height: 100%; object-fit: cover;
+    transition: transform 0.9s ease;
+  }
+  .philosophy-image:hover img { transform: scale(1.04); }
+
+  /* ─── SECTION HEADER ─── */
+  .section-header {
+    text-align: center; margin-bottom: 64px;
+  }
+  .eyebrow {
+    font-size: 10px; font-weight: 600; letter-spacing: 0.35em; text-transform: uppercase;
+    color: var(--primary); display: block; margin-bottom: 14px;
+  }
+  .section-header h2 {
+    font-family: 'Noto Serif', serif; font-size: 38px; font-weight: 500;
+    line-height: 1.2; color: var(--on-surface);
+  }
+  .section-header p {
+    font-size: 16px; color: var(--on-surface-variant); margin-top: 12px;
+    max-width: 500px; margin-left: auto; margin-right: auto;
+  }
+
+  /* ─── AMENITIES BENTO ─── */
+  .amenities-section {
+    padding: 120px 64px; max-width: 1280px; margin: 0 auto;
+  }
+  .bento-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: 340px 280px;
+    gap: 16px;
+  }
+  .bento-card {
+    position: relative; overflow: hidden; border-radius: 4px;
+    cursor: pointer;
+  }
+  .bento-card img {
+    width: 100%; height: 100%; object-fit: cover;
+    transition: transform 0.7s ease;
+  }
+  .bento-card:hover img { transform: scale(1.07); }
+  .bento-card .card-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.05) 55%);
+  }
+  .bento-card .card-label {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    padding: 24px;
+  }
+  .card-tag {
+    display: inline-block; background: rgba(125,84,0,0.25); backdrop-filter: blur(8px);
+    color: var(--primary-dim); font-size: 9px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase;
+    padding: 4px 10px; border-radius: 2px; margin-bottom: 8px;
+  }
+  .card-label h3 {
+    font-family: 'Noto Serif', serif; color: white; font-size: 22px; font-weight: 500;
+  }
+  .card-label p { font-size: 13px; color: rgba(255,255,255,0.75); margin-top: 4px; }
+  .bento-a { grid-column: 1 / 7; grid-row: 1 / 2; }
+  .bento-b { grid-column: 7 / 10; grid-row: 1 / 2; }
+  .bento-c { grid-column: 10 / 13; grid-row: 1 / 2; }
+  .bento-d { grid-column: 1 / 5; grid-row: 2 / 3; }
+  .bento-e { grid-column: 5 / 9; grid-row: 2 / 3; }
+  .bento-f { grid-column: 9 / 13; grid-row: 2 / 3; }
+
+  /* ─── INSTAGRAM ─── */
+  .instagram-section {
+    background: var(--surface-low);
+    padding: 100px 64px;
+    text-align: center;
+  }
+  .insta-handle {
+    font-family: 'Noto Serif', serif; font-size: 42px; font-style: italic;
+    color: var(--on-surface); margin: 16px 0 48px;
+  }
+  .insta-grid {
+    display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px;
+    max-width: 1100px; margin: 0 auto 36px;
+  }
+  .insta-item {
+    aspect-ratio: 1; overflow: hidden; cursor: pointer; position: relative;
+  }
+  .insta-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s, filter 0.5s; }
+  .insta-item:hover img { transform: scale(1.08); filter: brightness(0.85); }
+  .insta-item .insta-hover {
+    position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+    background: rgba(125,84,0,0.2); opacity: 0; transition: opacity 0.4s;
+  }
+  .insta-item:hover .insta-hover { opacity: 1; }
+  .btn-outline {
+    font-size: 11px; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--on-surface); border: 1px solid var(--outline-variant);
+    padding: 14px 36px; background: transparent; cursor: pointer; border-radius: 2px;
+    transition: all 0.3s;
+  }
+  .btn-outline:hover { border-color: var(--primary); color: var(--primary); }
+
+  /* ─── BOOKING CTA ─── */
+  .booking-section {
+    padding: 120px 64px;
+    text-align: center;
+    max-width: 1280px; margin: 0 auto;
+  }
+  .booking-section h2 {
+    font-family: 'Noto Serif', serif; font-size: 52px; font-weight: 500;
+    color: var(--on-surface); line-height: 1.15; margin-bottom: 56px;
+    letter-spacing: -0.01em;
+  }
+  .booking-form {
+    display: flex; gap: 0; align-items: stretch;
+    max-width: 700px; margin: 0 auto;
+    border: 1px solid var(--outline-variant); background: white;
+    border-radius: 3px; overflow: hidden;
+    box-shadow: 0 8px 40px rgba(44,38,34,0.06);
+  }
+  .booking-field {
+    flex: 1; padding: 20px 24px; border: none; border-right: 1px solid var(--outline-variant);
+    background: transparent; font-family: 'Be Vietnam Pro', sans-serif; font-size: 14px;
+    color: var(--on-surface); cursor: pointer; text-align: left;
+  }
+  .booking-field label {
+    display: block; font-size: 9px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--primary); margin-bottom: 4px;
+  }
+  .booking-field select, .booking-field input {
+    border: none; background: transparent; font-family: inherit; font-size: 15px;
+    color: var(--on-surface-variant); cursor: pointer; outline: none; width: 100%;
+  }
+  .booking-form .btn-primary {
+    border-radius: 0; padding: 0 40px; font-size: 11px; white-space: nowrap;
+  }
+  .booking-note {
+    margin-top: 16px; font-size: 12px; color: var(--outline); letter-spacing: 0.04em;
+  }
+
+  /* ─── LOCATION SECTION ─── */
+  .location-section {
+    background: var(--surface-container);
+    padding: 120px 64px;
+  }
+  .location-inner {
+    max-width: 1280px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+  }
+  .location-text .eyebrow { text-align: left; }
+  .location-text h2 {
+    font-family: 'Noto Serif', serif; font-size: 38px; font-weight: 500;
+    line-height: 1.2; margin-bottom: 20px;
+  }
+  .location-text p { font-size: 16px; color: var(--on-surface-variant); line-height: 1.75; margin-bottom: 36px; }
+  .transport-list { display: flex; flex-direction: column; gap: 20px; }
+  .transport-item { display: flex; gap: 16px; align-items: flex-start; }
+  .transport-icon {
+    width: 40px; height: 40px; border-radius: 50%;
+    background: var(--surface-low); display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; font-size: 18px;
+  }
+  .transport-item h4 {
+    font-size: 13px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--on-surface); margin-bottom: 4px;
+  }
+  .transport-item p { font-size: 14px; color: var(--on-surface-variant); }
+  .location-map {
+    height: 480px; border-radius: 4px; overflow: hidden; position: relative;
+  }
+  .location-map img { width: 100%; height: 100%; object-fit: cover; filter: sepia(20%) saturate(0.8); }
+  .map-pin {
+    position: absolute; top: 45%; left: 38%;
+    width: 14px; height: 14px; background: var(--primary); border-radius: 50%;
+    box-shadow: 0 0 0 4px rgba(125,84,0,0.25);
+    animation: ping 2s ease-in-out infinite;
+  }
+  .map-tag {
+    position: absolute; top: calc(45% - 46px); left: calc(38% - 50px);
+    background: white; padding: 6px 14px; border-radius: 2px;
+    font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--primary); white-space: nowrap;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+  }
+  @keyframes ping {
+    0%, 100% { box-shadow: 0 0 0 4px rgba(125,84,0,0.25); }
+    50% { box-shadow: 0 0 0 10px rgba(125,84,0,0.1); }
+  }
+
+  /* ─── LOCAL GUIDE ─── */
+  .local-guide {
+    padding: 120px 64px; max-width: 1280px; margin: 0 auto;
+  }
+  .guide-grid {
+    display: grid; grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: 400px 300px; gap: 16px;
+  }
+  .guide-a { grid-column: 1 / 8; grid-row: 1 / 3; }
+  .guide-b { grid-column: 8 / 13; grid-row: 1 / 2; }
+  .guide-c { grid-column: 8 / 11; grid-row: 2 / 3; }
+  .guide-d { grid-column: 11 / 13; grid-row: 2 / 3; }
+  .guide-card { position: relative; overflow: hidden; border-radius: 3px; cursor: pointer; }
+  .guide-card img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.7s; }
+  .guide-card:hover img { transform: scale(1.06); }
+  .guide-card .card-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, transparent 55%); }
+  .guide-card .card-label { position: absolute; bottom: 0; left: 0; right: 0; padding: 24px; }
+
+  /* ─── DISTANCES ─── */
+  .distances {
+    background: var(--surface-low); padding: 80px 64px;
+  }
+  .distances-inner {
+    max-width: 1280px; margin: 0 auto;
+    border: 1px solid var(--outline-variant); padding: 48px;
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 0; background: white;
+  }
+  .dist-col { padding: 0 40px; }
+  .dist-col + .dist-col { border-left: 1px solid var(--outline-variant); }
+  .dist-col h5 {
+    font-size: 10px; font-weight: 600; letter-spacing: 0.25em; text-transform: uppercase;
+    color: var(--primary); margin-bottom: 20px;
+  }
+  .dist-list { list-style: none; }
+  .dist-list li {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 10px 0; border-bottom: 1px solid var(--surface-high);
+    font-size: 14px;
+  }
+  .dist-list li:last-child { border-bottom: none; }
+  .dist-list .mi { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; color: var(--outline); }
+
+  /* ─── TESTIMONIALS ─── */
+  .testimonials {
+    padding: 120px 64px; text-align: center;
+    max-width: 900px; margin: 0 auto;
+  }
+  .testimonial-quote {
+    font-family: 'Noto Serif', serif; font-size: 26px; font-weight: 400; font-style: italic;
+    line-height: 1.5; color: var(--on-surface); margin-bottom: 28px;
+    position: relative;
+  }
+  .testimonial-quote::before {
+    content: '"'; font-size: 80px; color: var(--primary-dim); opacity: 0.4;
+    font-family: 'Noto Serif', serif; position: absolute; top: -30px; left: -20px;
+    line-height: 1;
+  }
+  .testimonial-author { font-size: 12px; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: var(--outline); }
+  .testimonial-stars { color: var(--primary-dim); font-size: 16px; letter-spacing: 3px; margin-bottom: 20px; }
+  .testimonial-dots { display: flex; justify-content: center; gap: 8px; margin-top: 40px; }
+  .dot {
+    width: 6px; height: 6px; border-radius: 50%; background: var(--outline-variant);
+    cursor: pointer; transition: background 0.3s;
+  }
+  .dot.active { background: var(--primary); }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: var(--inverse-surface);
+    color: var(--inverse-on-surface);
+    padding: 64px;
+  }
+  .footer-inner {
+    max-width: 1280px; margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 24px;
+  }
+  .footer-logo {
+    font-family: 'Noto Serif', serif; font-style: italic; font-size: 20px;
+    color: white; text-decoration: none;
+  }
+  .footer-logo span {
+    display: block; font-size: 10px; font-style: normal; font-family: 'Be Vietnam Pro', sans-serif;
+    letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.4);
+    margin-top: 2px;
+  }
+  .footer-links { display: flex; gap: 32px; flex-wrap: wrap; }
+  .footer-links a {
+    font-size: 11px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase;
+    color: rgba(255,255,255,0.55); text-decoration: none; transition: color 0.3s;
+  }
+  .footer-links a:hover { color: var(--primary-dim); }
+  .footer-copy { font-size: 11px; color: rgba(255,255,255,0.3); letter-spacing: 0.05em; }
+
+  /* ─── ENTRANCE ANIMATIONS ─── */
+  .fade-up {
+    opacity: 0; transform: translateY(28px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .fade-up.visible { opacity: 1; transform: translateY(0); }
+  .fade-up.delay-1 { transition-delay: 0.1s; }
+  .fade-up.delay-2 { transition-delay: 0.22s; }
+  .fade-up.delay-3 { transition-delay: 0.36s; }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 900px) {
+    .nav-inner { padding: 0 24px; }
+    .nav-links { display: none; }
+    .philosophy { grid-template-columns: 1fr; }
+    .philosophy-text { padding: 60px 32px; }
+    .amenities-section, .local-guide, .booking-section, .location-section { padding: 80px 24px; }
+    .instagram-section, .distances, .testimonials { padding: 80px 24px; }
+    footer { padding: 48px 24px; }
+    .footer-inner { flex-direction: column; text-align: center; }
+    .bento-grid { grid-template-rows: auto; grid-template-columns: 1fr 1fr; }
+    .bento-a { grid-column: 1 / 3; grid-row: auto; }
+    .bento-b, .bento-c, .bento-d, .bento-e, .bento-f { grid-column: span 1; grid-row: auto; }
+    .guide-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+    .guide-a, .guide-b, .guide-c, .guide-d { grid-column: span 2; }
+    .guide-c, .guide-d { grid-column: span 1; }
+    .location-inner { grid-template-columns: 1fr; gap: 40px; }
+    .distances-inner { grid-template-columns: 1fr; }
+    .dist-col + .dist-col { border-left: none; border-top: 1px solid var(--outline-variant); padding-top: 32px; margin-top: 32px; }
+    .booking-form { flex-direction: column; }
+    .booking-field { border-right: none; border-bottom: 1px solid var(--outline-variant); }
+    .insta-grid { grid-template-columns: repeat(3, 1fr); }
+    .section-header h2 { font-size: 28px; }
+    .hero h1 { font-size: 38px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">
+      AmberNest
+      <span>by AmberStays</span>
+    </a>
+    <div class="nav-links">
+      <a href="#" class="active">Home</a>
+      <a href="#amenities">Amenities</a>
+      <a href="#location">Location</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#booking">Booking</a>
+    </div>
+    <button class="btn-primary">Check Availability</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg" id="heroBg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Heritage Stays · Hills Retreat</div>
+    <h1>An Enclave of<br>Timeless Comfort.</h1>
+    <p>Experience the curated precision of a luxury escape with the intimate warmth of a home. AmberNest is your private sanctuary in the heart of the hills.</p>
+    <div class="hero-actions">
+      <button class="btn-primary">Book Your Stay</button>
+      <button class="btn-ghost">View Gallery</button>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    <div class="scroll-hint-line"></div>
+    Scroll
+  </div>
+</section>
+
+<!-- PHILOSOPHY -->
+<section class="philosophy">
+  <div class="philosophy-text linen">
+    <div style="position:relative;z-index:1">
+      <div class="philosophy-eyebrow">The AmberNest Philosophy</div>
+      <h2>Where luxury meets the familiar touch of home.</h2>
+      <p>At AmberNest, we believe true hospitality isn't found in grandeur alone, but in the subtle textures of a linen sheet, the weight of a stone hearth, and the golden light of a setting sun filtering through a private library.</p>
+      <a href="#" class="text-link">Our Story &rarr;</a>
+    </div>
+  </div>
+  <div class="philosophy-image">
+    <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?q=80&w=1916&auto=format&fit=crop" alt="Warm interior details of AmberNest — a vase with dried botanicals on a walnut credenza, warm ambient light, linen textures"/>
+  </div>
+</section>
+
+<!-- AMENITIES -->
+<section class="amenities-section" id="amenities">
+  <div class="section-header fade-up">
+    <span class="eyebrow">Curated Moments</span>
+    <h2>Exceptional Amenities</h2>
+    <p>Designed for the discerning traveler who values both comfort and intentionality.</p>
+  </div>
+  <div class="bento-grid">
+    <div class="bento-card bento-a fade-up">
+      <img src="https://images.unsplash.com/photo-1575429198097-0414ec08e8cd?q=80&w=2070&auto=format&fit=crop" alt="Private infinity pool overlooking valley at dusk"/>
+      <div class="card-overlay"></div>
+      <div class="card-label">
+        <span class="card-tag">Sanctuary</span>
+        <h3>Private Infinity Pool</h3>
+        <p>Heated year-round, facing the valley horizon.</p>
+      </div>
+    </div>
+    <div class="bento-card bento-b fade-up delay-1">
+      <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?q=80&w=1470&auto=format&fit=crop" alt="Gourmet kitchen with professional appliances"/>
+      <div class="card-overlay"></div>
+      <div class="card-label">
+        <span class="card-tag">Taste</span>
+        <h3>Gourmet Kitchen</h3>
+      </div>
+    </div>
+    <div class="bento-card bento-c fade-up delay-2">
+      <img src="https://images.unsplash.com/photo-1600607686527-6fb886090705?q=80&w=1374&auto=format&fit=crop" alt="The Library — reading room with fireplace"/>
+      <div class="card-overlay"></div>
+      <div class="card-label">
+        <span class="card-tag">The Library</span>
+      </div>
+    </div>
+    <div class="bento-card bento-d fade-up">
+      <img src="https://images.unsplash.com/photo-1540518614846-7eded433c457?q=80&w=1457&auto=format&fit=crop" alt="Master bedroom with warm textiles"/>
+      <div class="card-overlay"></div>
+      <div class="card-label">
+        <span class="card-tag">Rest</span>
+        <h3>Heritage Suites</h3>
+      </div>
+    </div>
+    <div class="bento-card bento-e fade-up delay-1">
+      <img src="https://images.unsplash.com/photo-1600566752355-35792bedcfea?q=80&w=1374&auto=format&fit=crop" alt="Spa bath with stone tub"/>
+      <div class="card-overlay"></div>
+      <div class="card-label">
+        <span class="card-tag">Wellness</span>
+        <h3>Stone Spa Bath</h3>
+      </div>
+    </div>
+    <div class="bento-card bento-f fade-up delay-2">
+      <img src="https://images.unsplash.com/photo-1567016376408-0226e4d0c1ea?q=80&w=1374&auto=format&fit=crop" alt="Warm living space with fireplace"/>
+      <div class="card-overlay"></div>
+      <div class="card-label">
+        <span class="card-tag">Living Space</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INSTAGRAM -->
+<section class="instagram-section" id="gallery">
+  <div class="fade-up">
+    <span class="eyebrow">Join Our Community</span>
+    <div class="insta-handle">@AmberNestStays</div>
+  </div>
+  <div class="insta-grid fade-up delay-1">
+    <div class="insta-item">
+      <img src="https://images.unsplash.com/photo-1537996194471-e657df975ab4?q=80&w=400&auto=format&fit=crop" alt=""/>
+      <div class="insta-hover">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+      </div>
+    </div>
+    <div class="insta-item">
+      <img src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?q=80&w=400&auto=format&fit=crop" alt=""/>
+      <div class="insta-hover"><svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></div>
+    </div>
+    <div class="insta-item">
+      <img src="https://images.unsplash.com/photo-1582719508461-905c673771fd?q=80&w=400&auto=format&fit=crop" alt=""/>
+      <div class="insta-hover"><svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></div>
+    </div>
+    <div class="insta-item">
+      <img src="https://images.unsplash.com/photo-1501183638710-841dd1904471?q=80&w=400&auto=format&fit=crop" alt=""/>
+      <div class="insta-hover"><svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></div>
+    </div>
+    <div class="insta-item">
+      <img src="https://images.unsplash.com/photo-1560185127-6a5b85a86c39?q=80&w=400&auto=format&fit=crop" alt=""/>
+      <div class="insta-hover"><svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></div>
+    </div>
+    <div class="insta-item">
+      <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=400&auto=format&fit=crop" alt=""/>
+      <div class="insta-hover"><svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></div>
+    </div>
+  </div>
+  <button class="btn-outline">Follow Our Journey ↗</button>
+</section>
+
+<!-- BOOKING CTA -->
+<section class="booking-section" id="booking">
+  <h2 class="fade-up">Ready for your escape?</h2>
+  <div class="booking-form fade-up delay-1">
+    <div class="booking-field">
+      <label>Check In</label>
+      <input type="date" placeholder="Select Date"/>
+    </div>
+    <div class="booking-field">
+      <label>Check Out</label>
+      <input type="date" placeholder="Select Date"/>
+    </div>
+    <div class="booking-field">
+      <label>Guests</label>
+      <select>
+        <option>2 Adults</option>
+        <option>1 Adult</option>
+        <option>2 Adults, 1 Child</option>
+        <option>2 Adults, 2 Children</option>
+      </select>
+    </div>
+    <button class="btn-primary">Check Availability</button>
+  </div>
+  <p class="booking-note fade-up delay-2">Secure your preferred dates for the upcoming season.</p>
+</section>
+
+<!-- LOCATION -->
+<section class="location-section" id="location">
+  <div class="location-inner">
+    <div class="location-text fade-up">
+      <span class="eyebrow">Arrival &amp; Discovery</span>
+      <h2>Effortless Access,<br>Total Privacy.</h2>
+      <p>Located just twenty minutes from the coastal highway, AmberNest offers a sanctuary that feels worlds away yet remains perfectly connected to the region's finest offerings.</p>
+      <div class="transport-list">
+        <div class="transport-item">
+          <div class="transport-icon">🚂</div>
+          <div>
+            <h4>By Rail</h4>
+            <p>The Amber Valley Express stops at our local station daily. Private chauffeur service is available for the 10-minute transfer.</p>
+          </div>
+        </div>
+        <div class="transport-item">
+          <div class="transport-icon">🚗</div>
+          <div>
+            <h4>By Road</h4>
+            <p>Scenic Route 12 provides a direct path with breathtaking ocean views. Valet parking is included with every stay.</p>
+          </div>
+        </div>
+        <div class="transport-item">
+          <div class="transport-icon">✈️</div>
+          <div>
+            <h4>By Air</h4>
+            <p>The regional airport is 35 minutes away. We can arrange a private helicopter transfer for an unforgettable arrival.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="location-map fade-up delay-1">
+      <img src="https://images.unsplash.com/photo-1569336415962-a4bd9f69c8bf?q=80&w=1631&auto=format&fit=crop" alt="Aerial map view of AmberNest location"/>
+      <div class="map-tag">AmberNest</div>
+      <div class="map-pin"></div>
+    </div>
+  </div>
+</section>
+
+<!-- LOCAL GUIDE -->
+<section class="local-guide">
+  <div class="section-header fade-up">
+    <span class="eyebrow">The Local Guide</span>
+    <h2>Curated Experiences</h2>
+    <p>Hand-selected moments within easy reach of AmberNest.</p>
+  </div>
+  <div class="guide-grid">
+    <div class="guide-card guide-a fade-up">
+      <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?q=80&w=1470&auto=format&fit=crop" alt="Intimate fine dining restaurant"/>
+      <div class="card-overlay"></div>
+      <div class="card-label">
+        <span class="card-tag">Gastronomy</span>
+        <h3>The Hearth Kitchen</h3>
+        <p>Organic farm-to-table dining. Just a 4-minute walk.</p>
+      </div>
+    </div>
+    <div class="guide-card guide-b fade-up delay-1">
+      <img src="https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=1470&auto=format&fit=crop" alt="Mountain lake trail"/>
+      <div class="card-overlay"></div>
+      <div class="card-label">
+        <span class="card-tag">Outdoors</span>
+        <h3>Echo Point Trail</h3>
+      </div>
+    </div>
+    <div class="guide-card guide-c fade-up delay-1">
+      <img src="https://images.unsplash.com/photo-1578301978018-3005759f48f7?q=80&w=1470&auto=format&fit=crop" alt="Art gallery space"/>
+      <div class="card-overlay"></div>
+      <div class="card-label">
+        <span class="card-tag">Culture</span>
+        <h3>The Amber Gallery</h3>
+      </div>
+    </div>
+    <div class="guide-card guide-d fade-up delay-2">
+      <img src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?q=80&w=1470&auto=format&fit=crop" alt="Wine tasting room"/>
+      <div class="card-overlay"></div>
+      <div class="card-label">
+        <span class="card-tag">Cellar</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DISTANCES -->
+<section class="distances">
+  <div class="distances-inner fade-up">
+    <div class="dist-col">
+      <h5>Restaurants</h5>
+      <ul class="dist-list">
+        <li><span>Marea Seafood</span><span class="mi">2.4 MI</span></li>
+        <li><span>Oak &amp; Iron Bistro</span><span class="mi">0.8 MI</span></li>
+        <li><span>Saffron Tea Room</span><span class="mi">1.1 MI</span></li>
+      </ul>
+    </div>
+    <div class="dist-col">
+      <h5>Activities</h5>
+      <ul class="dist-list">
+        <li><span>Wine Tasting</span><span class="mi">5.2 MI</span></li>
+        <li><span>Horseback Riding</span><span class="mi">3.0 MI</span></li>
+        <li><span>Private Beach Club</span><span class="mi">4.5 MI</span></li>
+      </ul>
+    </div>
+    <div class="dist-col">
+      <h5>Essentials</h5>
+      <ul class="dist-list">
+        <li><span>Artisanal Market</span><span class="mi">0.5 MI</span></li>
+        <li><span>Town Center</span><span class="mi">1.2 MI</span></li>
+        <li><span>Medical Center</span><span class="mi">2.8 MI</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials fade-up">
+  <span class="eyebrow">Guest Stories</span>
+  <div class="testimonial-stars" id="stars">★★★★★</div>
+  <div class="testimonial-quote" id="quote">
+    Staying at AmberNest was unlike anything I've experienced. Every detail — the hand-stitched linens, the private pool at dusk, the silence — felt like an intentional gift.
+  </div>
+  <div class="testimonial-author" id="author">— Priya M., Mumbai · October 2024</div>
+  <div class="testimonial-dots">
+    <div class="dot active" onclick="showTestimonial(0)"></div>
+    <div class="dot" onclick="showTestimonial(1)"></div>
+    <div class="dot" onclick="showTestimonial(2)"></div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <a href="#" class="footer-logo">
+      AmberNest
+      <span>by AmberStays.co</span>
+    </a>
+    <div class="footer-links">
+      <a href="#">Instagram</a>
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Service</a>
+      <a href="#">Contact Us</a>
+    </div>
+    <p class="footer-copy">© 2025 AmberNest by Amber Stays. All rights reserved.</p>
+  </div>
+</footer>
+
+<script>
+  // Hero parallax on load
+  window.addEventListener('load', () => {
+    document.getElementById('heroBg').classList.add('loaded');
+  });
+
+  // Scroll fade-in
+  const fadeEls = document.querySelectorAll('.fade-up');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+  }, { threshold: 0.12 });
+  fadeEls.forEach(el => observer.observe(el));
+
+  // Testimonials
+  const testimonials = [
+    { quote: "Staying at AmberNest was unlike anything I've experienced. Every detail — the hand-stitched linens, the private pool at dusk, the silence — felt like an intentional gift.", author: "— Priya M., Mumbai · October 2024" },
+    { quote: "We've stayed at luxury resorts across Europe, but AmberNest had something different — a genuine warmth. The library alone is worth the trip.", author: "— Rohan & Ananya S., Bangalore · December 2024" },
+    { quote: "From the moment you arrive, everything is considered. The breakfast, the views, the staff. We've already booked our second visit.", author: "— James T., London · January 2025" }
+  ];
+  function showTestimonial(i) {
+    document.getElementById('quote').style.opacity = 0;
+    setTimeout(() => {
+      document.getElementById('quote').textContent = testimonials[i].quote;
+      document.getElementById('author').textContent = testimonials[i].author;
+      document.getElementById('quote').style.opacity = 1;
+    }, 200);
+    document.querySelectorAll('.dot').forEach((d, idx) => d.classList.toggle('active', idx === i));
+  }
+  document.getElementById('quote').style.transition = 'opacity 0.3s';
+
+  // Auto-rotate testimonials
+  let current = 0;
+  setInterval(() => { current = (current + 1) % 3; showTestimonial(current); }, 5000);
+</script>
+</body>
+</html>
